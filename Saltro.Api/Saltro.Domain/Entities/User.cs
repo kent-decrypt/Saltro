@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Saltro.Domain.Entities;
 
 [Table("TblUsers")]
-public sealed partial class User
+public sealed partial class User : BaseEntity
 {
     private User() { }
 
@@ -37,5 +37,8 @@ public sealed partial class User
 
     public ICollection<UserAssociate> UserAssociates { get; private set; } = [];
     public ICollection<UserAssociate> Associates { get; private set; } = [];
+    public ICollection<UserAssociate> User_UserIds { get; private set; } = [];
+    public ICollection<UserAssociate> User_UserId1s { get; private set; } = [];
     public ICollection<UserGroupsMapping> UserGroupsMappings { get; private set; } = [];
+    public ICollection<Cart> Carts { get; private set; } = [];
 }

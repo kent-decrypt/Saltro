@@ -1,6 +1,6 @@
 ﻿namespace Saltro.Domain.Entities;
 
-public sealed partial class UserAssociate
+public sealed partial class UserAssociate : BaseEntity
 {
     /// <summary>
     /// Creates a new UserAssociate entity
@@ -21,5 +21,29 @@ public sealed partial class UserAssociate
         };
 
         return userAssociate;
+    }
+
+    /// <summary>
+    /// Sets the <seealso cref="User_UserId"/> to a specific value
+    /// </summary>
+    /// <param name="user_UserId1"></param>
+    /// <returns></returns>
+    public UserAssociate SetUser_UserId(int user_UserId1)
+    {
+        User_UserId = user_UserId1;
+
+        return this;
+    } 
+
+    /// <summary>
+    /// Sets the <seealso cref="User_UserId1"/> to a specific value
+    /// </summary>
+    /// <param name="user_UserId1"></param>
+    /// <returns></returns>
+    public UserAssociate SetUser_UserId1(int user_UserId1)
+    {
+        User_UserId1 = user_UserId1;
+
+        return this;
     }
 }

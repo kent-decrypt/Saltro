@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Saltro.Domain.Entities;
 
 [Table("TblUserGroups")]
-public sealed partial class UserGroup
+public sealed partial class UserGroup : BaseEntity
 {
     private UserGroup() { }
 

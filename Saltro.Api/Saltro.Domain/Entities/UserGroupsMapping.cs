@@ -3,7 +3,7 @@
 namespace Saltro.Domain.Entities;
 
 [Table("TblUserUserGroups")]
-public sealed partial class UserGroupsMapping
+public sealed partial class UserGroupsMapping : BaseEntity
 {
     private UserGroupsMapping() { }
 

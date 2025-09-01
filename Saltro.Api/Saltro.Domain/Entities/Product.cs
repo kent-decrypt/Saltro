@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Saltro.Domain.Entities;
 
 [Table("TblProducts")]
-public sealed partial class Product
+public sealed partial class Product : BaseEntity
 {
     private Product() { }
 
@@ -27,4 +27,6 @@ public sealed partial class Product
     public string? ProductCode { get; private set; } = default!;
     public string? CostCenter { get; private set; } = default!;
     public string? CostDim1 { get; private set; } = default!;
+
+    public ICollection<CartItem> CartItems { get; private set; } = [];
 }

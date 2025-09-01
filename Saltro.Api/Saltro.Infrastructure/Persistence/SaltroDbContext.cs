@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Saltro.Domain.Entities;
 
-namespace Saltro.Infrastructure;
+namespace Saltro.Infrastructure.Persistence;
 
-public sealed class SaltroDbContext(DbContextOptions<SaltroDbContext> options) : DbContext(options)
+internal sealed class SaltroDbContext(DbContextOptions<SaltroDbContext> options) : DbContext(options)
 {
+    public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<User> Users => Set<User>();
     public DbSet<UserAssociate> UserAssociates => Set<UserAssociate>();
@@ -30,8 +32,15 @@ public sealed class SaltroDbContext(DbContextOptions<SaltroDbContext> options) :
                 .HasForeignKey(e => e.AssociateId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            entity.Property(e => e.User_UserId);
-            entity.Property(e => e.User_UserId1);
+            entity.HasOne(e => e.User_User)
+                .WithMany(u => u.User_UserIds)
+                .HasForeignKey(e => e.User_UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(e => e.User_User1)
+                .WithMany(u => u.User_UserId1s)
+                .HasForeignKey(e => e.User_UserId1)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<UserGroupsMapping>(entity =>

@@ -1,6 +1,6 @@
 ﻿namespace Saltro.Domain.Entities;
 
-public sealed partial class Product
+public sealed partial class Product : BaseEntity
 {
     /// <summary>
     /// TODO: check uniqueId implementations and also other things that should be generated automatically

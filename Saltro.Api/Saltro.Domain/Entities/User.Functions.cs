@@ -1,6 +1,6 @@
 ﻿namespace Saltro.Domain.Entities;
 
-public sealed partial class User
+public sealed partial class User : BaseEntity
 {
     /// <summary>
     /// Creates a new user
@@ -65,5 +65,12 @@ public sealed partial class User
         };
 
         return user;
+    }
+
+    public User SoftDelete()
+    {
+        DeletedDate = DateTime.Now;        
+
+        return this;
     }
 }

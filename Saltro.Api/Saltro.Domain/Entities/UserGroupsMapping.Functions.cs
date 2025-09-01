@@ -1,6 +1,6 @@
 ﻿namespace Saltro.Domain.Entities;
 
-public sealed partial class UserGroupsMapping
+public sealed partial class UserGroupsMapping : BaseEntity
 {
     /// <summary>
     /// Creates a new UserGroupsMapping entity that will be ready for saving

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Saltro.Domain.Entities;
 
 [Table("TblUserSubscriptions")]
-public sealed partial class UserSubscription
+public sealed partial class UserSubscription : BaseEntity
 {
     private UserSubscription() { }
 
