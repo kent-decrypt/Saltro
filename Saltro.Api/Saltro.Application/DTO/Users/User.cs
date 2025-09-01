@@ -15,7 +15,6 @@ public class User
     public string? Country { get; init; } = default!;
     public string? Phone { get; init; } = default!;
     public string? Email { get; init; } = default!;
-    public string? Token { get; init; } = default!;
     public bool IsAdmin { get; init; }
     public bool IsAuto { get; init; }
     public DateTime? DeletedDate { get; init; }

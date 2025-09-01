@@ -43,10 +43,12 @@ internal static class UserMappingProfiles
     /// </summary>
     internal static Expression<Func<UserAssociateEntity, UserAssociate>> MapAssociates()
     {
+        var userMap = MapUsers().Compile();
+
         return entity => new UserAssociate
         {
-            UserId = entity.UserId,
-            AssociateId = entity.AssociateId,
+            User = userMap(entity.User),
+            Associate = userMap(entity.Associate),
             User_UserId = entity.User_UserId,
             User_UserId1 = entity.User_UserId1
         };
