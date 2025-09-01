@@ -6,7 +6,7 @@ using Saltro.Domain.Repository;
 
 namespace Saltro.Application.Queries.Users;
 
-public record GetUserAssociates(DataSourceRequest request) : IRequest<DataSourceResult>;
+public record GetUserAssociates(DataSourceRequest Request) : IRequest<DataSourceResult>;
 
 internal sealed class GetUserAssociatesHandler(IUserAssociateRepository repository) : IRequestHandler<GetUserAssociates, DataSourceResult>
 {
@@ -19,7 +19,7 @@ internal sealed class GetUserAssociatesHandler(IUserAssociateRepository reposito
             .Include(i => i.User)
             .Include(i => i.Associate)
             .Select(UserMappingProfiles.MapAssociates())
-            .ToDataSourceResult(request.request);
+            .ToDataSourceResult(request.Request);
 
         return Task.FromResult(query);
     }

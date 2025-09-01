@@ -5,7 +5,7 @@ using Saltro.Domain.Repository;
 
 namespace Saltro.Application.Queries.Users;
 
-public record GetUsers(DataSourceRequest request) : IRequest<DataSourceResult>;
+public record GetUsers(DataSourceRequest Request) : IRequest<DataSourceResult>;
 
 internal sealed class GetUsersHandler(IUserRepository repository) : IRequestHandler<GetUsers, DataSourceResult>
 {
@@ -18,7 +18,7 @@ internal sealed class GetUsersHandler(IUserRepository repository) : IRequestHand
             .Where(i => i.DeletedDate == null)
             .Select(UserMappingProfiles.MapUsers())
             .OrderBy(i => i.Id)
-            .ToDataSourceResult(request.request);
+            .ToDataSourceResult(request.Request);
 
         return Task.FromResult(query);
     }
