@@ -19,6 +19,8 @@ public static class DependencyInjection
         this IServiceCollection services)
     {
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(DataSourceRequestBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+
         services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
