@@ -1,5 +1,7 @@
 ﻿using UserEntity = Saltro.Domain.Entities.User;
 using UserAssociateEntity = Saltro.Domain.Entities.UserAssociate;
+using UserGroupEntity = Saltro.Domain.Entities.UserGroup;
+using UserSubscriptionEntity = Saltro.Domain.Entities.UserSubscription;
 using System.Linq.Expressions;
 using Saltro.Application.DTO.Users;
 
@@ -8,7 +10,7 @@ namespace Saltro.Application.Common.Mappings;
 internal static class UserMappingProfiles
 {
     /// <summary>
-    /// Maps the UserEntity to UserDTO
+    /// Maps the <seealso cref="UserEntity"/> to <seealso cref="User"/> DTO
     /// </summary>
     /// <returns></returns>
     internal static Expression<Func<UserEntity, User>> MapUsers()
@@ -39,7 +41,7 @@ internal static class UserMappingProfiles
     }
 
     /// <summary>
-    /// Maps the UserAssociateEntity to UserAssociate DTO
+    /// Maps the <seealso cref="UserAssociateEntity"/> to <seealso cref="UserAssociate"/> DTO
     /// </summary>
     internal static Expression<Func<UserAssociateEntity, UserAssociate>> MapAssociates()
     {
@@ -51,6 +53,39 @@ internal static class UserMappingProfiles
             Associate = userMap(entity.Associate),
             User_UserId = entity.User_UserId,
             User_UserId1 = entity.User_UserId1
+        };
+    }
+
+    /// <summary>
+    /// Maps the <seealso cref="UserGroupEntity"/> to <seealso cref="UserGroup"/> DTO
+    /// </summary>
+    /// <returns></returns>
+    internal static Expression<Func<UserGroupEntity, UserGroup>> MapUserGroups()
+    {
+        return entity => new()
+        {
+            Id = entity.UserGroupId,
+            Name = entity.Name,
+            UniqueId = entity.UniqueId,
+            AllowDefaultIfAuto = entity.AllowDefaultIfAuto,
+            IsCustom = entity.IsCustom
+        };
+    }
+
+    /// <summary>
+    /// Maps the <seealso cref="UserSubscriptionEntity"/> to <seealso cref="UserSubscription"/> DTO
+    /// </summary>
+    /// <returns></returns>
+    internal static Expression<Func<UserSubscriptionEntity, UserSubscription>> MapSubscriptions()
+    {
+        var userMapper = MapUsers().Compile();
+
+        return entity => new()
+        {
+            Id = entity.Id,
+            User = userMapper(entity.User),
+            Subscription = entity.Subscription,
+            Opslag = entity.Opslag,
         };
     }
 }

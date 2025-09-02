@@ -1,5 +1,6 @@
-using Saltro.Infrastructure;
+using Saltro.Api.Middlewares;
 using Saltro.Application;
+using Saltro.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +26,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+app.UseCors();
+
 app.UseAuthorization();
 
+app.AddExceptionMiddleware();
 
 app.MapControllers();
 

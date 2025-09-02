@@ -7,14 +7,14 @@ using Saltro.Domain.Repository;
 
 namespace Saltro.Application.Queries.Carts;
 
-public record GetCarts(DataSourceRequest Request) : IRequest<DataSourceResult>;
+public record GetAllCarts(DataSourceRequest Request) : IRequest<DataSourceResult>;
 
-internal sealed class GetCartsHandler(ICartRepository repository, ILogger<GetCartsHandler> logger) : IRequestHandler<GetCarts, DataSourceResult>
+internal sealed class GetAllCartsHandler(ICartRepository repository, ILogger<GetAllCartsHandler> logger) : IRequestHandler<GetAllCarts, DataSourceResult>
 {
     private readonly ICartRepository _repository = repository;
-    private readonly ILogger<GetCartsHandler> _logger = logger;
+    private readonly ILogger<GetAllCartsHandler> _logger = logger;
 
-    public Task<DataSourceResult> Handle(GetCarts request, CancellationToken cancellationToken)
+    public Task<DataSourceResult> Handle(GetAllCarts request, CancellationToken cancellationToken)
     {
         try
         {
@@ -29,7 +29,7 @@ internal sealed class GetCartsHandler(ICartRepository repository, ILogger<GetCar
         }
         catch (Exception ex)
         {
-            _logger.LogError("Failed to Query Cart with exception: {ex}", ex);
+            _logger.LogError("Failed to Query All Carts with exception: {ex}", ex);
             throw ProblemDetailsException.InternalServerException("There was a problem with your request");
         }
     }
