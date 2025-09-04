@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using Saltro.Application.Exceptions;
 using System.Text.Json;
 
@@ -41,6 +42,29 @@ public class ExceptionsMiddleware(RequestDelegate next, ILogger<ExceptionsMiddle
                 {
                     problemDetails.Extensions["errorMessages"] = value;
                 }
+            }
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(problemDetails));
+        }
+        catch(ValidationException ex)
+        {
+            _logger.LogError(ex, "Invalid request");
+
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.Response.ContentType = "application/problem+json";
+
+            var problemDetails = new ProblemDetails()
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Invalid request",
+                Detail = "One or more validations occurred",
+                Type = default,
+                Instance = default,
+            };
+
+            if(ex.Errors.Any())
+            {
+                problemDetails.Extensions["validationErrors"] = ex.Errors.Select(i => i.ErrorMessage);
             }
 
             await context.Response.WriteAsync(JsonSerializer.Serialize(problemDetails));

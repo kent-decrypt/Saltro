@@ -1,7 +1,8 @@
-﻿using MediatR;
-using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Saltro.Application.Behaviours;
+using Saltro.Application.Commands.Products;
 
 namespace Saltro.Application;
 
@@ -18,8 +19,9 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(
         this IServiceCollection services)
     {
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(DataSourceRequestBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(DataSourceRequestBehavior<,>));
+        services.AddValidatorsFromAssembly(typeof(CreateProduct).Assembly);
 
         services.AddMediatR(cfg =>
         {

@@ -7,9 +7,9 @@ namespace Saltro.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UsersController(ILogger<UsersController> logger, IMediator mediator) : ControllerBase
+[ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ProblemDetails))]
+public class UsersController(IMediator mediator) : ControllerBase
 {
-    private readonly ILogger<UsersController> _logger = logger;
     private readonly IMediator _mediator = mediator;
 
     [HttpPost("query")]

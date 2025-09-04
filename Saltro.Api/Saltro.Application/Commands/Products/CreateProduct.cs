@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Saltro.Application.Exceptions;
 using Saltro.Application.Payloads;
@@ -19,8 +20,18 @@ internal sealed class CreateProductHandler(IProductRepository repository, ILogge
     {
         try
         {
+            var uniqueId = 1;
+            var lastProduct = await _repository.Query()
+                .OrderByDescending(x => x.ProductId)
+                .FirstOrDefaultAsync(cancellationToken);
+            
+            if (lastProduct != null && int.TryParse(lastProduct.UniqueId, out int newUniqueId))
+            {
+                uniqueId = newUniqueId + 1;
+            }
+
             var newProduct = ProductEntity.Create(
-                uniqueId: "",
+                uniqueId: uniqueId.ToString(),
                 name: request.Payload.Name,
                 price: request.Payload.Price,
                 maxQuantity: request.Payload.MaxQuantity,
@@ -36,7 +47,7 @@ internal sealed class CreateProductHandler(IProductRepository repository, ILogge
                 costCenter: request.Payload.CostCenter!,
                 costDim1: request.Payload.CostDim1!);
 
-            await _repository.AddAsync(newProduct);
+            await _repository.AddAsync(newProduct, cancellationToken);
 
             return true;
         }

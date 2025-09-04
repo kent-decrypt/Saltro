@@ -1,13 +1,16 @@
 using KendoNET.DynamicLinq;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Saltro.Application.Commands.Products;
+using Saltro.Application.Payloads;
 using Saltro.Application.Queries.Products;
 
 namespace Saltro.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ProductsController(ILogger<ProductsController> logger, IMediator mediator) : ControllerBase
+[ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ProblemDetails))]
+public class ProductsController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
@@ -19,5 +22,15 @@ public class ProductsController(ILogger<ProductsController> logger, IMediator me
         var result = await _mediator.Send(new GetProducts(request), cancellationToken);
 
         return Ok(result);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    public async Task<IActionResult> AddProduct(CreateProductRequest payload, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new CreateProduct(payload), cancellationToken);
+
+        return Ok();
     }
 }

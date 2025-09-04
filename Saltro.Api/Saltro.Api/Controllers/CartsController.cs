@@ -7,7 +7,8 @@ namespace Saltro.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CartsController(ILogger<CartsController> logger, IMediator mediator) : ControllerBase
+[ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ProblemDetails))]
+public class CartsController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 

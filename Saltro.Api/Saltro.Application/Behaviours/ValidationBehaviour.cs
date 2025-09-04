@@ -3,16 +3,11 @@ using MediatR;
 
 namespace Saltro.Application.Behaviours;
 
-public class ValidationBehaviour<TRequest, TResponse>
+public class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
-
-    public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
-    {
-        _validators = validators;
-    }
+    private readonly IEnumerable<IValidator<TRequest>> _validators = validators;
 
     public async Task<TResponse> Handle(
         TRequest request,

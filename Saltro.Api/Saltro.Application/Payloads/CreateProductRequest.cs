@@ -1,10 +1,13 @@
-﻿namespace Saltro.Application.Payloads;
+﻿using System.ComponentModel;
+
+namespace Saltro.Application.Payloads;
 
 /// <summary>
 /// Payload for creating a new product
 /// </summary>
 public class CreateProductRequest
 {
+    [DisplayName("Burat")]
     public string Name { get; set; } = default!;
     public decimal Price { get; set; }
     public int MaxQuantity { get; set; }
